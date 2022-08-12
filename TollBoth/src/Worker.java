@@ -10,6 +10,7 @@ public class Worker extends User {
 		super(jmbg, firstName, lastName, email, address, gender, username, password, role);
 	}
 	
-
+	
+	
 	
 }
