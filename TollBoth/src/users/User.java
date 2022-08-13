@@ -1,3 +1,4 @@
+package users;
 import java.util.Objects;
 
 public class User extends Person {
