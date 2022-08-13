@@ -1,3 +1,4 @@
+package users;
 import java.util.Objects;
 
 public class Person {
@@ -74,6 +75,8 @@ public class Person {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {
