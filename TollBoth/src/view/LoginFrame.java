@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import crud.CreateWorker;
 import manage.ManagerFactory;
 import manage.UserManager;
 
@@ -34,7 +35,6 @@ public class LoginFrame extends JFrame {
 		this.mngFactory = mngFactory;
 		this.userMng  = mngFactory.getUserMng();
 		loginFrame();
-		loginGUI();
 	}
 
 	private void loginFrame() {
@@ -97,10 +97,12 @@ public class LoginFrame extends JFrame {
 							switch(user.getClass().getName()) {
 							case "users.Worker":
 								System.out.println("matooori");
+								CreateWorker cw = new CreateWorker(mngFactory);
+								cw.setVisible(true);
 								//UcenikMainFrame uMF = new UcenikMainFrame(getMngFactory(), korisnik);
 								break;
 							case "users.Manager":
-								//PredavacMainFrame pMF = new PredavacMainFrame(getMngFactory(), korisnik);
+								ManagerMainFrame mMF = new ManagerMainFrame(getMngFactory(), user);
 								break;
 							case "users.Leader":
 								//SekretarMainFrame sMF = new SekretarMainFrame(getMngFactory(), korisnik);
