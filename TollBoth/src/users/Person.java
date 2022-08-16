@@ -4,7 +4,7 @@ import java.util.Objects;
 public class Person {
 
 	public static enum Gender {
-		male, female
+		male, female, other
 	};
 
 	private String jmbg;
