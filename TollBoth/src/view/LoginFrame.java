@@ -19,8 +19,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import net.miginfocom.swing.MigLayout;
+import users.Manager;
 import users.Person;
 import users.User;
+import users.Worker;
+import view.manager.ManagerMainFrame;
+import view.worker.WorkerMainFrame;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = -7798292689167507569L;
@@ -97,16 +101,13 @@ public class LoginFrame extends JFrame {
 							switch(user.getClass().getName()) {
 							case "users.Worker":
 								System.out.println("matooori");
-								//UcenikMainFrame uMF = new UcenikMainFrame(getMngFactory(), korisnik);
+								WorkerMainFrame wMF = new WorkerMainFrame(getMngFactory(), (Worker) user);
 								break;
 							case "users.Manager":
-								//PredavacMainFrame pMF = new PredavacMainFrame(getMngFactory(), korisnik);
+								ManagerMainFrame mMF = new ManagerMainFrame(getMngFactory(), (Manager) user);
 								break;
 							case "users.Leader":
 								//SekretarMainFrame sMF = new SekretarMainFrame(getMngFactory(), korisnik);
-								break;
-							case "korisnici.Administrator":
-								//AdministratorMainFrame aMF = new AdministratorMainFrame(getMngFactory(), korisnik);
 								break;
 							default:
 								JOptionPane.showMessageDialog(null, "Application error", "Error", JOptionPane.ERROR_MESSAGE);
@@ -118,7 +119,7 @@ public class LoginFrame extends JFrame {
 				
 				}
 				if(!found) {
-					error.setText("User not with that username and password not found");
+					error.setText("User with that username and password not found");
 					error.setVisible(true);
 				}}
 				

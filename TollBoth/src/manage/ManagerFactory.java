@@ -66,6 +66,10 @@ public class ManagerFactory {
 			ResultSet result = statement.executeQuery(sql);
 			this.workMng.loadData(result);
 			
+			sql = "SELECT * FROM Manager";
+			result = statement.executeQuery(sql);
+			this.managerMng.loadData(result);
+			
 			connection.close();
 			
 		} catch (SQLException e) {
