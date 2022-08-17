@@ -99,7 +99,7 @@ public class LoginFrame extends JFrame {
 								System.out.println("matooori");
 								CreateWorker cw = new CreateWorker(mngFactory);
 								cw.setVisible(true);
-								//UcenikMainFrame uMF = new UcenikMainFrame(getMngFactory(), korisnik);
+								WorkerMainFrame wMF = new WorkerMainFrame(getMngFactory(), user);
 								break;
 							case "users.Manager":
 								ManagerMainFrame mMF = new ManagerMainFrame(getMngFactory(), user);
