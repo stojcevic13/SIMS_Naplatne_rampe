@@ -1,10 +1,15 @@
 package manage;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import users.Worker;
+import utils.AppSettings;
 
 
 public class WorkerManager {
@@ -18,7 +23,24 @@ public class WorkerManager {
 		return workers;
 	}
 	
+	public void insertData(Worker worker) {
+		String databaseURL = AppSettings.getDatabaseURL();
+		
+		try {
+			Connection connection = DriverManager.getConnection(databaseURL);
+			PreparedStatement statement = connection.prepareStatement("INSERT into Worker(Username, Password, Jmbg, FirstName, LastName, Email, Address, Gender, TollBooth) VALUES('"+worker.getUsername()+"','"+worker.getPassword()+"','"+worker.getJmbg()+"','"+worker.getFirstName()+"','"+worker.getLastName()+"','"+worker.getEmail()+"','"+worker.getAddress()+"','"+worker.getGender()+"','"+worker.getTollBooth()+"')");
+			statement.executeUpdate();
+			
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public void loadData(ResultSet result) {
+		workers.clear();
 		try {
 			while (result.next()) {
 				String userName = result.getString("Username");
