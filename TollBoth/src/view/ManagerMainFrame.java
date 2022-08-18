@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import crud.LeaderCRUDMenu;
+import crud.TollBoothCRUDMenu;
+import crud.TollStationCRUDMenu;
 import crud.WorkerCRUDMenu;
 import manage.ManagerFactory;
 import net.miginfocom.swing.MigLayout;
@@ -50,6 +53,11 @@ public class ManagerMainFrame extends JFrame{
 		JButton tollBoothBtn = new JButton("Change Toll Booth Data");
 		JButton reportBtn = new JButton("Check Reports");
 		
+		workerBtn.setPreferredSize(tollStationBtn.getPreferredSize());
+		leaderBtn.setPreferredSize(tollStationBtn.getPreferredSize());
+		tollBoothBtn.setPreferredSize(tollStationBtn.getPreferredSize());
+		reportBtn.setPreferredSize(tollStationBtn.getPreferredSize());
+		
 		panel.add(new JLabel ("Welcome, "+user.getFirstName()), "wrap");
 		panel.add(workerBtn);
 		panel.add(leaderBtn, "wrap");
@@ -67,18 +75,21 @@ public class ManagerMainFrame extends JFrame{
 		leaderBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				LeaderCRUDMenu lCm = new LeaderCRUDMenu(getMngFactory());
 			}
 		});
 		
 		tollStationBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TollStationCRUDMenu sCm = new TollStationCRUDMenu(getMngFactory());
 			}
 		});
 		
 		tollBoothBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TollBoothCRUDMenu bCm = new TollBoothCRUDMenu(getMngFactory());
 			}
 		});
 		

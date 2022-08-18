@@ -1,23 +1,23 @@
 package users;
 
 public class Leader extends User {
-	private int tollStation;
+	private Integer tollStation;
 	
 	public Leader() {
 		
 	}
 
-	public Leader(String jmbg, String firstName, String lastName, String email, String address, Person.Gender gender,
-			String username, String password, int tollStation) {
-		super(jmbg, firstName, lastName, email, address, gender, username, password, User.Role.leader);
+	public Leader(String jmbg, String firstName, String lastName, String email, String address, String gender,
+			String username, String password, Integer tollStation) {
+		super(jmbg, firstName, lastName, email, address, Person.Gender.valueOf(gender), username, password, User.Role.leader);
 		this.tollStation = tollStation;
 	}
 
-	public int getTollStation() {
+	public Integer getTollStation() {
 		return tollStation;
 	}
 
-	public void setTollStation(int tollStation) {
+	public void setTollStation(Integer tollStation) {
 		this.tollStation = tollStation;
 	}
 	
