@@ -20,8 +20,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import net.miginfocom.swing.MigLayout;
+import users.Leader;
 import users.Person;
 import users.User;
+import view.leader.LeaderMainFrame;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = -7798292689167507569L;
@@ -96,7 +98,6 @@ public class LoginFrame extends JFrame {
 							dispose();
 							switch(user.getClass().getName()) {
 							case "users.Worker":
-								System.out.println("matooori");
 								CreateWorker cw = new CreateWorker(mngFactory);
 								cw.setVisible(true);
 								//UcenikMainFrame uMF = new UcenikMainFrame(getMngFactory(), korisnik);
@@ -105,10 +106,7 @@ public class LoginFrame extends JFrame {
 								ManagerMainFrame mMF = new ManagerMainFrame(getMngFactory(), user);
 								break;
 							case "users.Leader":
-								//SekretarMainFrame sMF = new SekretarMainFrame(getMngFactory(), korisnik);
-								break;
-							case "korisnici.Administrator":
-								//AdministratorMainFrame aMF = new AdministratorMainFrame(getMngFactory(), korisnik);
+								LeaderMainFrame lMF = new LeaderMainFrame(getMngFactory(), (Leader) user);
 								break;
 							default:
 								JOptionPane.showMessageDialog(null, "Application error", "Error", JOptionPane.ERROR_MESSAGE);
@@ -135,7 +133,7 @@ public class LoginFrame extends JFrame {
 				setVisible(false);
 				dispose();
 			
-		}});
+						}});
 		
 		
 		btnReset.addActionListener(new ActionListener() {
