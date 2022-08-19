@@ -38,7 +38,7 @@ public class LeaderMainFrame extends JFrame{
 		this.setResizable(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		leaderGUI();
-		this.setMinimumSize(new Dimension(470,405));
+		this.setMinimumSize(new Dimension(600,500));
 		this.setVisible(true);
 	}
 	
@@ -90,8 +90,11 @@ public class LeaderMainFrame extends JFrame{
 		
 		LeaderProfile lp = new LeaderProfile(this.mngFactory, this.leader, this);
 		components.add(lp);
+		ViewPricelist vp = new ViewPricelist(this.mngFactory, this.leader, this);
+		components.add(vp);
 		
-		lp.setVisible(true);
+		lp.setVisible(false);
+		vp.setVisible(true);
 		
 		///////////////////////////////////////////////////////////////////////////
 		
@@ -103,6 +106,22 @@ public class LeaderMainFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				for(JPanel panel : components) {
 					if(panel.equals(lp)) {
+						panel.setVisible(true);
+					}else{
+						panel.setVisible(false);
+					}
+				}
+				
+			}
+			
+		});
+		
+		viewPricelistItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(JPanel panel : components) {
+					if(panel.equals(vp)) {
 						panel.setVisible(true);
 					}else{
 						panel.setVisible(false);
