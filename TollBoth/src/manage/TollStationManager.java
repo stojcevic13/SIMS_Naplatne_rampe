@@ -17,6 +17,15 @@ public class TollStationManager {
 		return tollStations;
 	}
 	
+	public static TollStation findTollStation(int ID) {
+		for(TollStation ts : tollStations) {
+			if(ts.getTollStationID() == ID) {
+				return ts;
+			}
+		}
+		return null;
+	}
+	
 	public void loadData(ResultSet result) {
 		tollStations.clear();
 		try {
