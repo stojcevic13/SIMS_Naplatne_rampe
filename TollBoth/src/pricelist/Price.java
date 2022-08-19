@@ -25,4 +25,27 @@ public class Price {
 			prices.put("3EU", c3EU);
 			prices.put("4EU", c4EU);
 		}
+
+
+		public TollStation getTollStation() {
+			return tollStation;
+		}
+
+
+		public void setTollStation(TollStation tollStation) {
+			this.tollStation = tollStation;
+		}
+
+
+		public Map<String, Double> getPrices() {
+			return prices;
+		}
+
+
+		public void setPrices(Map<String, Double> prices) {
+			this.prices = prices;
+		}
+		
+		
+		
 }
