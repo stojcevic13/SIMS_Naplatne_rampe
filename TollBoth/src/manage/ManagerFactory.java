@@ -73,6 +73,7 @@ public class ManagerFactory {
 			sql = "SELECT * FROM Leader";
 			result = statement.executeQuery(sql);
 			this.leaderMng.loadData(result);
+			
 			connection.close();
 			
 		} catch (SQLException e) {
