@@ -11,7 +11,6 @@ public class UserManager {
 	
 	public ArrayList<User> getUsers() {
 		return users;
-		
 	}
 	
 	public static void addPerson(User user) {

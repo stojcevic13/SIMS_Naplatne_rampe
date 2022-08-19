@@ -10,21 +10,21 @@ import javax.swing.JPanel;
 import manage.ManagerFactory;
 import net.miginfocom.swing.MigLayout;
 
-public class WorkerCRUDMenu extends JFrame{
+public class TollStationCRUDMenu extends JFrame{
 
-	public ManagerFactory mngFactory;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3413603756480024960L;
+	private static final long serialVersionUID = 2504148749579682866L;
+	public ManagerFactory mngFactory;
 
-	public WorkerCRUDMenu(ManagerFactory mngFactory) {
+	public TollStationCRUDMenu(ManagerFactory mngFactory) {
 		this.mngFactory = mngFactory;
 		menuFrame();
 	}
 	
 	private void menuFrame() {
-		this.setTitle("Change Worker Data");
+		this.setTitle("Change Toll Station Data");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -32,7 +32,6 @@ public class WorkerCRUDMenu extends JFrame{
 		pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-
 	}
 	
 	private void menuGUI() {
@@ -55,18 +54,17 @@ public class WorkerCRUDMenu extends JFrame{
 		panel.add(readBtn);
 		panel.add(deleteBtn, "wrap");
 
-		
 		createBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CreateWorker cW = new CreateWorker(getMngFactory());
+				CreateTollStation cW = new CreateTollStation(getMngFactory());
 			}
 		});
 		
 		updateBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UpdateWorker uW = new UpdateWorker(getMngFactory());
+				UpdateTollStation uW = new UpdateTollStation(getMngFactory());
 
 			}
 		});
@@ -74,18 +72,18 @@ public class WorkerCRUDMenu extends JFrame{
 		readBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ReadWorker rW = new ReadWorker(getMngFactory());
+				ReadTollStation rW = new ReadTollStation(getMngFactory());
 			}
 		});
 		
 		deleteBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DeleteWorker dW = new DeleteWorker(getMngFactory());
+				DeleteTollStation dW = new DeleteTollStation(getMngFactory());
 			}
 		});
+
 	}
-	
 	public ManagerFactory getMngFactory() {
 		return mngFactory;
 	}
