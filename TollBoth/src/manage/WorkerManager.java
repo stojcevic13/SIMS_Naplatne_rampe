@@ -13,11 +13,7 @@ import utils.AppSettings;
 
 
 public class WorkerManager {
-	private ArrayList<Worker> workers;
-	
-	public WorkerManager() {
-		this.workers = new ArrayList<Worker>();
-	}
+	private static ArrayList<Worker> workers = new ArrayList<Worker>();
 	
 	public ArrayList<Worker> getWorkers(){
 		return workers;
@@ -28,7 +24,40 @@ public class WorkerManager {
 		
 		try {
 			Connection connection = DriverManager.getConnection(databaseURL);
-			PreparedStatement statement = connection.prepareStatement("INSERT into Worker(Username, Password, Jmbg, FirstName, LastName, Email, Address, Gender, TollBooth) VALUES('"+worker.getUsername()+"','"+worker.getPassword()+"','"+worker.getJmbg()+"','"+worker.getFirstName()+"','"+worker.getLastName()+"','"+worker.getEmail()+"','"+worker.getAddress()+"','"+worker.getGender()+"','"+worker.getTollBooth()+"')");
+			PreparedStatement statement = null;
+			if(worker.getTollBooth() == null) {
+				statement = connection.prepareStatement("INSERT into Worker(Username, Password, Jmbg, FirstName, LastName, Email, Address, Gender) VALUES('"+worker.getUsername()+"','"+worker.getPassword()+"','"+worker.getJmbg()+"','"+worker.getFirstName()+"','"+worker.getLastName()+"','"+worker.getEmail()+"','"+worker.getAddress()+"','"+worker.getGender()+"')");
+			}else {
+				statement = connection.prepareStatement("INSERT into Worker(Username, Password, Jmbg, FirstName, LastName, Email, Address, Gender, TollBooth) VALUES('"+worker.getUsername()+"','"+worker.getPassword()+"','"+worker.getJmbg()+"','"+worker.getFirstName()+"','"+worker.getLastName()+"','"+worker.getEmail()+"','"+worker.getAddress()+"','"+worker.getGender()+"','"+worker.getTollBooth()+"')");
+				
+			}
+			statement.executeUpdate();
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateData(Worker worker) {
+		String databaseURL = AppSettings.getDatabaseURL();
+		
+		try {
+			Connection connection = DriverManager.getConnection(databaseURL);
+			PreparedStatement statement = connection.prepareStatement("UPDATE Worker SET Password = ?, Jmbg = ?, FirstName = ?, LastName = ?, Email = ?, Address = ?, Gender = ?, TollBooth = ? WHERE Username = ?");
+			statement.setString(1, worker.getPassword());
+			statement.setString(2, worker.getJmbg());
+			statement.setString(3, worker.getFirstName());
+			statement.setString(4, worker.getLastName());
+			statement.setString(5, worker.getEmail());
+			statement.setString(6, worker.getAddress());
+			statement.setString(7, worker.getGender().toString());
+			if(worker.getTollBooth() == null) {
+				statement.setString(8, "0");
+			}else {
+				statement.setString(8, String.valueOf(worker.getTollBooth()));
+			}
+			statement.setString(9, worker.getUsername());
 			statement.executeUpdate();
 			
 			connection.close();
@@ -36,7 +65,22 @@ public class WorkerManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void deleteData(String username) {
+		String databaseURL = AppSettings.getDatabaseURL();
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection(databaseURL);
+			PreparedStatement statement = connection.prepareStatement("DELETE FROM Worker WHERE Username = ?");
+			statement.setString(1, username);
+			statement.executeUpdate();
 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void loadData(ResultSet result) {
@@ -60,7 +104,8 @@ public class WorkerManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
+	
+	
 	
 }
