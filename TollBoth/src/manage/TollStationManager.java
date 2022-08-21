@@ -13,7 +13,7 @@ import users.TollStation;
 import utils.AppSettings;
 
 public class TollStationManager {
-	private static ArrayList<TollStation> tollStations = new ArrayList<TollStation>();
+	public static ArrayList<TollStation> tollStations = new ArrayList<TollStation>();
 
 	public ArrayList<TollStation> getTollStations() {
 		return tollStations;
