@@ -14,6 +14,9 @@ public class ManagerFactory {
 	private UserManager userMng;
 	private ManagerManager managerMng;
 	private WorkerManager workMng;
+	private TollBoothManager boothMng;
+	private TollStationManager stationMng;
+	private PriceManager priceMng;
 	
 	
 	
@@ -24,6 +27,9 @@ public class ManagerFactory {
 		this.userMng = new UserManager();
 		this.managerMng = new ManagerManager();
 		this.workMng = new WorkerManager();
+		this.stationMng = new TollStationManager();
+		this.boothMng = new TollBoothManager();
+		this.priceMng = new PriceManager();
 	}
 	public AppSettings getAppSettings() {
 		return appSettings;
@@ -73,10 +79,45 @@ public class ManagerFactory {
 			sql = "SELECT * FROM Leader";
 			result = statement.executeQuery(sql);
 			this.leaderMng.loadData(result);
+			
+			sql = "SELECT * FROM TollBooth";
+			result = statement.executeQuery(sql);
+			this.boothMng.loadData(result);
+			
+			sql = "SELECT * FROM TollStation";
+			result = statement.executeQuery(sql);
+			this.stationMng.loadData(result);
+			
+			sql = "SELECT * FROM Pricelist";
+			result = statement.executeQuery(sql);
+			this.priceMng.loadData(result);
+			
 			connection.close();
+			
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	public TollBoothManager getBoothMng() {
+		return boothMng;
+	}
+	public void setBoothMng(TollBoothManager boothMng) {
+		this.boothMng = boothMng;
+	}
+	public TollStationManager getStationMng() {
+		return stationMng;
+	}
+	public void setStationMng(TollStationManager stationMng) {
+		this.stationMng = stationMng;
+	}
+	public PriceManager getPriceMng() {
+		return priceMng;
+	}
+	public void setPriceMng(PriceManager priceMng) {
+		this.priceMng = priceMng;
+	}
+	
+	
 }

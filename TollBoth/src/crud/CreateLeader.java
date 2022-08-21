@@ -11,52 +11,55 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import manage.LeaderManager;
 import manage.ManagerFactory;
-import manage.TollBoothManager;
+import manage.TollStationManager;
 import manage.UserManager;
-import manage.WorkerManager;
 import net.miginfocom.swing.MigLayout;
+import users.Leader;
 import users.TollBooth;
+import users.TollStation;
 import users.User;
 import users.Worker;
 
-public class CreateWorker extends JFrame{
+public class CreateLeader extends JFrame{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1664137488468048744L;
+	private static final long serialVersionUID = 8216122174381656100L;
 
 	private ManagerFactory mngFactory;
-	private WorkerManager workerMng;
-	private TollBoothManager boothMng;
+	private LeaderManager leaderMng;
+	private TollStationManager stationMng;
 	private UserManager userMng;
 	
-	public CreateWorker(ManagerFactory mngFactory){
+	public CreateLeader(ManagerFactory mngFactory){
 		this.mngFactory = mngFactory;
-		this.workerMng  = this.mngFactory.getWorkMng();
-		this.boothMng = this.mngFactory.getBoothMng();
+		this.leaderMng  = this.mngFactory.getLeaderMng();
+		this.stationMng = this.mngFactory.getStationMng();
 		this.userMng = this.mngFactory.getUserMng();
-		createWorkerFrame();
+		createLeaderFrame();
 	}
-	
-	private void createWorkerFrame() {
-		this.setTitle("Create a new Worker!");
+
+	private void createLeaderFrame() {
+		this.setTitle("Create a new Leader!");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
-		createWorkerGUI();
+		createLeaderGUI();
 		pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	
-	private void createWorkerGUI() {
+	private void createLeaderGUI() {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 		panel.setLayout(new MigLayout("", "20[]20[]20", "[]20"));
 		String[] choices = { "Male","Female", "Other"};
-		String[] booths = getTollBooths();
+		String[] booths = getTollStations();
 		
 		JTextField nameTF = new JTextField(30);
 		JTextField lastNameTF = new JTextField(30);
@@ -66,11 +69,11 @@ public class CreateWorker extends JFrame{
 		JComboBox<String> genderCB = new JComboBox<String>(choices);
 		JTextField usernameTF = new JTextField(30);
 		JPasswordField passwordTF = new JPasswordField(30);
-		JComboBox<String> tollBoothCB = new JComboBox<String>(booths);
+		JComboBox<String> tollStationCB = new JComboBox<String>(booths);
 		JButton submitBtn = new JButton("Submit");
 		JLabel error = new JLabel("Input incorrect. Try again.");
 		error.setForeground(Color.red);
-		tollBoothCB.setSelectedIndex(0);
+		tollStationCB.setSelectedIndex(0);
 		
 		panel.add(new JLabel ("First name:"));
 		panel.add(nameTF, "wrap");
@@ -88,8 +91,8 @@ public class CreateWorker extends JFrame{
 		panel.add(usernameTF, "wrap");
 		panel.add(new JLabel ("Password:"));
 		panel.add(passwordTF, "wrap");
-		panel.add(new JLabel ("Toll Booth:"));
-		panel.add(tollBoothCB, "wrap");
+		panel.add(new JLabel ("Toll Station:"));
+		panel.add(tollStationCB, "wrap");
 		panel.add(error, "span, align center, wrap");
 		error.setVisible(false);
 		panel.add(submitBtn, "span, align center");
@@ -105,11 +108,11 @@ public class CreateWorker extends JFrame{
 				String genderString = genderCB.getSelectedItem().toString().trim().toLowerCase();
 				String usernameString = usernameTF.getText().trim();
 				String passwordString = new String(passwordTF.getPassword()).trim();
-				Integer boothString;
-				if(tollBoothCB.getSelectedItem().toString().equals("None")) {
-					boothString = null;
+				Integer stationString;
+				if(tollStationCB.getSelectedItem().toString().equals("None")) {
+					stationString = null;
 				}else {
-					boothString = Integer.valueOf(tollBoothCB.getSelectedItem().toString().trim());
+					stationString = getTollStationFromLocation(tollStationCB.getSelectedItem().toString());
 				}
 				
 				if(nameString.equals("") || lastNameString.equals("") || emailString.equals("") || addressString.equals("") || jmbgString.equals("") || usernameString.equals("") || passwordString.equals("")) {
@@ -117,7 +120,7 @@ public class CreateWorker extends JFrame{
 					error.setForeground(Color.red);
 					error.setVisible(true);
 				}else {
-					if(workerMng.getWorkers() != null) {
+					if(leaderMng.getLeaders() != null) {
 						boolean check = true;
 						for(User user: userMng.getUsers()) {
 							if(user.getUsername().equals(usernameString)) {
@@ -133,8 +136,8 @@ public class CreateWorker extends JFrame{
 							}
 						}
 						if(check == true) {
-							Worker worker = new Worker(jmbgString, nameString, lastNameString, emailString, addressString, genderString, usernameString, passwordString, boothString);
-							workerMng.insertData(worker);
+							Leader leader = new Leader(jmbgString, nameString, lastNameString, emailString, addressString, genderString, usernameString, passwordString, stationString);
+							leaderMng.insertData(leader);
 							error.setText(nameString+" added successfully.");
 							error.setForeground(Color.black);
 							error.setVisible(true);
@@ -144,21 +147,53 @@ public class CreateWorker extends JFrame{
 				}
 			}
 		});
+
 	}
 	
-	private String[] getTollBooths() {
-		String[] data = null;
+	private Integer getTollStationFromLocation(String location) {
+		Integer i = 0;
+		for(TollStation tollStation : stationMng.getTollStations()) {
+			if(tollStation.getLocation().equals(location))
+				i = tollStation.getTollStationID();
+		}
+		return i;
+	}
+	
+	private String[] getTollStations() {
+		String[] data;
 		int i = 1;
-		if (boothMng.getTollBooths() == null) {
+		data = new String[stationMng.getTollStations().size() + 1];
+		data[0] = "None";
+		if (stationMng.getTollStations().size() == 0) {
 			return data;
 		}
-		data = new String[boothMng.getTollBooths().size() + 1];
-		data[0] = "None";
-		for(TollBooth tollBooth : boothMng.getTollBooths()) {
-			data[i] = String.valueOf(tollBooth.getTollBoothID());
-			i = i + 1;
+		boolean check = true;
+		for(TollStation tollStation : stationMng.getTollStations()) {
+			check = true;
+			for(Leader leader : leaderMng.getLeaders()) {
+				if(leader.getTollStation() == tollStation.getTollStationID()) {
+					check = false;
+				}
+			}
+			if(check == true) {
+				i = i + 1;
+			}
 		}
-		return data;
+		String[] freeStations = new String[i];
+		i = 1;
+		freeStations[0] = "None";
+		for(TollStation tollStation : stationMng.getTollStations()) {
+			check = true;
+			for(Leader leader : leaderMng.getLeaders()) {
+				if(leader.getTollStation() == tollStation.getTollStationID()) {
+					check = false;
+				}
+			}
+			if(check == true) {
+				freeStations[i] = tollStation.getLocation();
+				i = i + 1;
+			}
+		}
+		return freeStations;
 	}
-
 }
