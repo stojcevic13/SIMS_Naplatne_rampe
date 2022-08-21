@@ -24,6 +24,7 @@ import users.Leader;
 import users.Person;
 import users.User;
 import view.leader.LeaderMainFrame;
+import view.worker.WorkerMainFrame;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = -7798292689167507569L;

@@ -1,3 +1,4 @@
+package users;
 import java.util.Objects;
 
 public class Vehicle {
@@ -7,18 +8,16 @@ public class Vehicle {
 	private String registration;
 	private String brand;
 	private Category category;
-	private Person owner;
 	
 	public Vehicle() {
 
 	}
 
-	public Vehicle(String registration, String brand, Vehicle.Category category, Person owner) {
+	public Vehicle(String registration, String brand, Category category) {
 		this();
 		this.registration = registration;
 		this.brand = brand;
 		this.category = category;
-		this.owner = owner;
 	}
 
 	public String getRegistration() {
@@ -45,17 +44,9 @@ public class Vehicle {
 		this.category = category;
 	}
 
-	public Person getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Person owner) {
-		this.owner = owner;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(brand, category, owner, registration);
+		return Objects.hash(brand, category, registration);
 	}
 
 	@Override
@@ -67,15 +58,14 @@ public class Vehicle {
 		if (getClass() != obj.getClass())
 			return false;
 		Vehicle other = (Vehicle) obj;
-		return Objects.equals(brand, other.brand) && category == other.category && Objects.equals(owner, other.owner)
+		return Objects.equals(brand, other.brand) && category == other.category
 				&& Objects.equals(registration, other.registration);
 	}
 
 	@Override
 	public String toString() {
-		return "Vehicle [registration=" + registration + ", brand=" + brand + ", category=" + category + ", owner="
-				+ owner.getJmbg() + "]";
+		return "Vehicle [registration=" + registration + ", brand=" + brand + ", category=" + category + "]";
 	}
 	
-	
+
 }

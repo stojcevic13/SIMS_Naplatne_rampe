@@ -2,6 +2,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import users.Vehicle;
+
 public class Tag {
 	
 	private int id;

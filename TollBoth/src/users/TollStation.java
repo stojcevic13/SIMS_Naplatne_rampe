@@ -1,5 +1,7 @@
 package users;
 
+import java.sql.ResultSet;
+
 public class TollStation {
 
 	private int tollStationID;
@@ -33,4 +35,12 @@ public class TollStation {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	@Override
+	public String toString() {
+		return "TollStation [tollStationID=" + tollStationID + ", location=" + location + "]";
+	}
+
+	
+
 }

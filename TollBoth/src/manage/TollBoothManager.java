@@ -17,7 +17,7 @@ public class TollBoothManager {
 	public ArrayList<TollBooth> getTollBooths() {
 		return tollBooths;
 	}
-
+	
 	
 	public void loadData(ResultSet result) {
 		tollBooths.clear();
@@ -82,5 +82,26 @@ public class TollBoothManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public TollBooth loadByID(int id) {
+		String databaseURL = AppSettings.getDatabaseURL();
+		try {
+			Connection connection = DriverManager.getConnection(databaseURL);
+			
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM TollBooth WHERE TollBoothID = ?");
+			statement.setInt(1, id);
+			ResultSet result = statement.executeQuery();
+			
+			while (result.next()) {
+				return TollBooth.Parse(result);
+			}
+			
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
