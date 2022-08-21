@@ -55,27 +55,27 @@ public class PricelistModel extends AbstractTableModel{
 		
 		switch(columnIndex) {
 		case 0:
-			return prices.get("1aDIN");
+			return prices.get("c1aDIN");
 		case 1:
-			return prices.get("1DIN");
+			return prices.get("c1DIN");
 		case 2:
-			return prices.get("2DIN");
+			return prices.get("c2DIN");
 		case 3:
-			return prices.get("3DIN");
+			return prices.get("c3DIN");
 		case 4:
-			return prices.get("4DIN");
+			return prices.get("c4DIN");
 		case 5:
 			return p.getTollStation().getLocation();
 		case 6:
-			return prices.get("1aEU");
+			return prices.get("c1aEU");
 		case 7:
-			return prices.get("1EU");
+			return prices.get("c1EU");
 		case 8:
-			return prices.get("2EU");
+			return prices.get("c2EU");
 		case 9:
-			return prices.get("3EU");
+			return prices.get("c3EU");
 		case 10:
-			return prices.get("4EU");
+			return prices.get("c4EU");
 		default:
 			return null;
 		}

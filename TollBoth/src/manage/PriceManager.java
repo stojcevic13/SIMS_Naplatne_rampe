@@ -1,24 +1,64 @@
 package manage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import pricelist.Price;
-import users.Leader;
 import users.TollStation;
-import utils.AppSettings;
+import java.util.Random;
+
 
 
 
 public class PriceManager {
+	
+	public static enum Category{
+		c1a, c1, c2, c3, c4;
+		
+		public static Category generateCategory() {
+            Category[] values = Category.values();
+            int length = values.length;
+            int randIndex = new Random().nextInt(length);
+            return values[randIndex];
+        }
+	  
+	};
+
+	
+	public static enum Currency{
+		DIN, EU
+	};
+
 	private static ArrayList<Price> priceList = new ArrayList<Price>();
 
 	public ArrayList<Price> getPriceList() {
 		return priceList;
+	}
+	
+	public double calculatePrice(Category category, Currency currency, TollStation startPoint, TollStation endPoint  ) {
+		Price startPricelist = null;
+		Price endPricelist = null;
+		double startPrice, endPrice;
+		for(Price price : priceList) {
+			if(price.getTollStation() == startPoint) {
+				startPricelist = price;
+			}
+			if(price.getTollStation() == endPoint) {
+				endPricelist = price;
+			}
+		}
+		String subCategory = category.toString() + currency.toString();
+		startPrice = startPricelist.getPrices().get(subCategory);
+		endPrice = endPricelist.getPrices().get(subCategory);
+		
+		if(startPrice < endPrice) {
+			return endPrice - startPrice;
+		} else if (endPrice < startPrice) {
+			return startPrice - endPrice;
+		} else {
+			return priceList.get(0).getPrices().get(subCategory);
+		}
 	}
 	
 	public void loadData(ResultSet result) {
@@ -46,4 +86,5 @@ public class PriceManager {
 			e.printStackTrace();
 		}
 	}
+
 }
