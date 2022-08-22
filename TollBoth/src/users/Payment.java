@@ -1,28 +1,34 @@
+package users;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import users.Vehicle;
+import manage.PriceManager.Category;;
 
 public class Payment {
 
 	private int id;
 	private double amount;
 	private LocalDateTime datetime;
-	private Vehicle.Category category;
+	private Category category;
 	private TollStation tollStation;
 	
 	public Payment() {
 
 	}
-
-	public Payment(int id, double amount, LocalDateTime datetime, Vehicle.Category category, TollStation tollStation) {
+	
+	public Payment(double amount, LocalDateTime datetime, Category category, TollStation tollStation) {
 		this();
-		this.id = id;
 		this.amount = amount;
 		this.datetime = datetime;
 		this.category = category;
 		this.tollStation = tollStation;
 	}
+	
+	public Payment(int id, double amount, LocalDateTime datetime, Category category, TollStation tollStation) {
+		this(amount, datetime, category, tollStation);
+		this.id = id;
+	}
+	
 
 	public int getId() {
 		return id;
@@ -48,11 +54,11 @@ public class Payment {
 		this.datetime = datetime;
 	}
 
-	public Vehicle.Category getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(Vehicle.Category category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
@@ -86,7 +92,7 @@ public class Payment {
 	@Override
 	public String toString() {
 		return "Payment [id=" + id + ", amount=" + amount + ", datetime=" + datetime + ", category=" + category
-				+ ", tollStation=" + tollStation.getId() + "]";
+				+ ", tollStation=" + tollStation.getTollStationID() + "]";
 	}
 	
 	

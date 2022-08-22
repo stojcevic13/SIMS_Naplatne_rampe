@@ -13,9 +13,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import manage.ManagerFactory;
+import manage.PaymentManager;
+import manage.PriceManager;
+import users.Payment;
 import users.TollBooth;
 import users.TollStation;
-import users.Vehicle.Category;
+import utils.AppSettings;
+import utils.Convert;
+import utils.DateCalculator;
+import manage.PriceManager.Category;
+import manage.PriceManager.Currency;
+import manage.SectionManager;
+import manage.TollSystemManager;
 
 public class TollCollectionFrame extends JFrame {
 
@@ -24,13 +33,21 @@ public class TollCollectionFrame extends JFrame {
 	private JTextField txtDepartureTime;
 	private JComboBox<TollStation> stationCB;
 	private JComboBox<Category> categoryCB;
-	
+
 	private ManagerFactory mngFactory;
 	private TollBooth tollBooth;
+
+	protected String beginTimeStr;
+	protected LocalDateTime beginTime;
+
+	protected TollStation beginStation;
+
+	protected TollStation endStation;
 
 	public TollCollectionFrame(ManagerFactory mngFactory, TollBooth tollBooth) {
 		this.mngFactory = mngFactory;
 		this.tollBooth = tollBooth;
+		this.endStation = mngFactory.getStationMng().loadByID(tollBooth.getTollStation());
 		getContentPane().setLayout(null);
 
 		JLabel lblTollCollection = new JLabel("Toll collection");
@@ -43,7 +60,7 @@ public class TollCollectionFrame extends JFrame {
 
 		this.stationCB = new JComboBox<TollStation>();
 		fillStationCB();
-		stationCB.setBounds(126, 68, 209, 21);
+		stationCB.setBounds(170, 68, 209, 21);
 		getContentPane().add(stationCB);
 
 		JLabel lblDepartureTime = new JLabel("Departure time: ");
@@ -51,7 +68,7 @@ public class TollCollectionFrame extends JFrame {
 		getContentPane().add(lblDepartureTime);
 
 		txtDepartureTime = new JTextField();
-		txtDepartureTime.setBounds(126, 110, 209, 19);
+		txtDepartureTime.setBounds(170, 110, 209, 19);
 		getContentPane().add(txtDepartureTime);
 		txtDepartureTime.setColumns(10);
 
@@ -61,32 +78,50 @@ public class TollCollectionFrame extends JFrame {
 
 		this.categoryCB = new JComboBox<Category>();
 		fillCategoryCB();
-		categoryCB.setBounds(144, 156, 191, 21);
+		categoryCB.setBounds(170, 156, 191, 21);
 		getContentPane().add(categoryCB);
 
 		JButton btnNewButton = new JButton("Collect");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TollStation beginStation = (TollStation) stationCB.getSelectedItem();
-				int endStation = tollBooth.getTollStation();
+				beginStation = (TollStation) stationCB.getSelectedItem();
+				
 				Category category = (Category) categoryCB.getSelectedItem();
-				String beginTimeStr = txtDepartureTime.getText();
-				if (validData()) {
-					
-				} else {
-					JOptionPane.showMessageDialog(btnNewButton, "Invalid input! Data format must be like: ");
+				beginTimeStr = txtDepartureTime.getText();
+				LocalDateTime endTime = LocalDateTime.now();
+				
+				if (!validData()) {
+					JOptionPane.showMessageDialog(btnNewButton, "Invalid input! Data format must be like: " + AppSettings.DATE_TIME_FMT);
+					return;
+				}
+				if (overSpeedLimit(beginTime, endTime)) {
+					JOptionPane.showMessageDialog(btnNewButton, "Speed over the limit! The police is called.");
+					return;
 				}
 				
+				double price = mngFactory.getPriceMng().calculatePrice(category, Currency.DIN, beginStation, endStation);
+				Payment payment = new Payment(price, endTime, category, endStation);
+				PaymentManager.insertData(payment);				
+			}
+
+			private boolean overSpeedLimit(LocalDateTime beginTime, LocalDateTime endTime) {
+				double kilometers = SectionManager.getDistance(beginStation, endStation);
+				double hours = DateCalculator.getHours(beginTime, endTime);
+				double averageSpeed = kilometers*1.0 / hours;
+				double speedLimit = TollSystemManager.getSpeedLimit();
+				System.out.println(averageSpeed + " " + speedLimit);
+				return averageSpeed > speedLimit;
 			}
 
 			private boolean validData() {
-				// TODO Auto-generated method stub
-				return false;
+				beginTime = Convert.toDate(txtDepartureTime.getText());
+				return !(beginTime == null);
 			}
 
 		});
-		btnNewButton.setBounds(210, 291, 85, 21);
+		
+		btnNewButton.setBounds(210, 270, 85, 21);
 		getContentPane().add(btnNewButton);
 
 		setTitle("Toll Collection Frame");
@@ -100,7 +135,8 @@ public class TollCollectionFrame extends JFrame {
 		this.mngFactory.getStationMng().reloadData();
 		List<TollStation> stations = this.mngFactory.getStationMng().getTollStations();
 		for (TollStation station : stations) {
-			this.stationCB.addItem(station);
+			if (!station.equals(endStation))
+				this.stationCB.addItem(station);
 		}
 	}
 

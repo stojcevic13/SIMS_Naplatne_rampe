@@ -102,7 +102,27 @@ public class TollStationManager {
 		}
 	}
 	
-
+	
+	public TollStation loadByID(int id) {
+		String databaseURL = AppSettings.getDatabaseURL();
+		try {
+			Connection connection = DriverManager.getConnection(databaseURL);
+			
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM TollStation WHERE TollStationID = ?");
+			statement.setInt(1, id);
+			ResultSet result = statement.executeQuery();
+			
+			while (result.next()) {
+				return TollStation.Parse(result);
+			}
+			
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	

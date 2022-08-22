@@ -23,6 +23,7 @@ public class WorkerMainFrame extends JFrame {
 
 	public WorkerMainFrame(ManagerFactory mngFactory, User user) {
 		this.worker = mngFactory.getWorkMng().loadByUsername(user.getUsername());
+		worker.setTollBooth(28);
 		this.tollBooth = mngFactory.getBoothMng().loadByID(worker.getTollBooth());
 		
 		getContentPane().setLayout(null);
@@ -34,11 +35,17 @@ public class WorkerMainFrame extends JFrame {
 		JButton btnCollection = new JButton("Collection");
 		btnCollection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tollBooth.isWorking()) {
-					TollCollectionFrame tollCollectionFrame = new TollCollectionFrame(mngFactory, tollBooth);
-				} else {
-					JOptionPane.showMessageDialog(btnCollection, "Toll booth is not working!");
+				
+				if (tollBooth == null) {
+					JOptionPane.showMessageDialog(btnCollection, "You currently do not have a function!");
+					return;
 				}
+				if (!tollBooth.isWorking()){
+					JOptionPane.showMessageDialog(btnCollection, "Toll booth is not working!");
+					return;
+				}
+				
+				TollCollectionFrame tollCollectionFrame = new TollCollectionFrame(mngFactory, tollBooth);
 			}
 		});
 		btnCollection.setBounds(212, 237, 97, 21);

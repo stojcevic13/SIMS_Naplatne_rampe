@@ -31,7 +31,7 @@ public class LoginFrame extends JFrame {
 	private ManagerFactory mngFactory;
 	private UserManager userMng;
 	
-	 private JButton btnLogin;
+	private JButton btnLogin;
 
 
 	public LoginFrame(ManagerFactory mngFactory) {
