@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import users.TollBooth;
 import users.TollStation;
 import utils.AppSettings;
 
@@ -36,6 +38,20 @@ public class TollStationManager {
 				TollStation tmp = new TollStation(tollStationID, location);
 				this.tollStations.add(tmp);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void reloadData() {
+		String databaseURL = AppSettings.getDatabaseURL();
+		try {
+			Connection connection = DriverManager.getConnection(databaseURL);
+			Statement statement = connection.createStatement();
+			String sql = "SELECT * FROM TollStation";
+			ResultSet result = statement.executeQuery(sql);
+			loadData(result);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -85,4 +101,29 @@ public class TollStationManager {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public TollStation loadByID(int id) {
+		String databaseURL = AppSettings.getDatabaseURL();
+		try {
+			Connection connection = DriverManager.getConnection(databaseURL);
+			
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM TollStation WHERE TollStationID = ?");
+			statement.setInt(1, id);
+			ResultSet result = statement.executeQuery();
+			
+			while (result.next()) {
+				return TollStation.Parse(result);
+			}
+			
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
 }

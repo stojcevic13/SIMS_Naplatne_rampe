@@ -41,10 +41,10 @@ public class PriceManager {
 		Price endPricelist = null;
 		double startPrice, endPrice;
 		for(Price price : priceList) {
-			if(price.getTollStation() == startPoint) {
+			if(price.getTollStation().getTollStationID() == startPoint.getTollStationID()) {
 				startPricelist = price;
 			}
-			if(price.getTollStation() == endPoint) {
+			if(price.getTollStation().getTollStationID() == endPoint.getTollStationID()) {
 				endPricelist = price;
 			}
 		}

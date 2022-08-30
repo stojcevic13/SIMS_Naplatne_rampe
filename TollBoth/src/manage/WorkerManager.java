@@ -107,5 +107,27 @@ public class WorkerManager {
 	}
 	
 	
+	public Worker loadByUsername(String username) {
+		String databaseURL = AppSettings.getDatabaseURL();
+		try {
+			Connection connection = DriverManager.getConnection(databaseURL);
+			
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Worker WHERE Username = ?");
+			statement.setString(1, username);
+			ResultSet result = statement.executeQuery();
+			
+			while (result.next()) {
+				return Worker.Parse(result);
+			}
+			
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	
 }

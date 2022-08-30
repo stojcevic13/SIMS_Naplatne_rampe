@@ -1,5 +1,8 @@
 package users;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class TollBooth {
 
 	private int tollBoothID;
@@ -58,12 +61,28 @@ public class TollBooth {
 	public void setTollGate(boolean tollGate) {
 		this.tollGate = tollGate;
 	}
-
+	
 	public boolean isAuxilaryDevices() {
 		return auxilaryDevices;
 	}
-
+	
 	public void setAuxilaryDevices(boolean auxilaryDevices) {
 		this.auxilaryDevices = auxilaryDevices;
 	}
+	
+	public static TollBooth Parse(ResultSet result) throws SQLException {
+		int tollBoothID = result.getInt("TollBoothID");
+		int tollStation = result.getInt("TollStation");
+		boolean registrationScanner = result.getBoolean("RegistrationScanner");
+		boolean tollGate = result.getBoolean("TollGate");
+		boolean AuxilaryDevices = result.getBoolean("AuxilaryDevices");
+		
+		return new TollBooth(tollBoothID, tollStation, registrationScanner, tollGate, AuxilaryDevices);
+	}
+	
+	public boolean isWorking() {
+		return this.registrationScanner && this.auxilaryDevices && this.tollGate;
+	}
+	
+	
 }

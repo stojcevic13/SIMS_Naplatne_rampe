@@ -24,13 +24,14 @@ import users.Leader;
 import users.Person;
 import users.User;
 import view.leader.LeaderMainFrame;
+import view.worker.WorkerMainFrame;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = -7798292689167507569L;
 	private ManagerFactory mngFactory;
 	private UserManager userMng;
 	
-	 private JButton btnLogin;
+	private JButton btnLogin;
 
 
 	public LoginFrame(ManagerFactory mngFactory) {
@@ -98,9 +99,9 @@ public class LoginFrame extends JFrame {
 							dispose();
 							switch(user.getClass().getName()) {
 							case "users.Worker":
-								CreateWorker cw = new CreateWorker(mngFactory);
-								cw.setVisible(true);
-								//UcenikMainFrame uMF = new UcenikMainFrame(getMngFactory(), korisnik);
+//								CreateWorker cw = new CreateWorker(mngFactory);
+//								cw.setVisible(true);
+								WorkerMainFrame wMF = new WorkerMainFrame(getMngFactory(), user);
 								break;
 							case "users.Manager":
 								ManagerMainFrame mMF = new ManagerMainFrame(getMngFactory(), user);

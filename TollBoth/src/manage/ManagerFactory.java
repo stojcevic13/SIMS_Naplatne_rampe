@@ -75,7 +75,7 @@ public class ManagerFactory {
 			sql = "SELECT * FROM Manager";
 			result = statement.executeQuery(sql);
 			this.managerMng.loadData(result);
-
+			
 			sql = "SELECT * FROM Leader";
 			result = statement.executeQuery(sql);
 			this.leaderMng.loadData(result);
