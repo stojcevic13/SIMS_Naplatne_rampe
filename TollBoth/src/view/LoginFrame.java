@@ -99,8 +99,8 @@ public class LoginFrame extends JFrame {
 							dispose();
 							switch(user.getClass().getName()) {
 							case "users.Worker":
-								CreateWorker cw = new CreateWorker(mngFactory);
-								cw.setVisible(true);
+//								CreateWorker cw = new CreateWorker(mngFactory);
+//								cw.setVisible(true);
 								WorkerMainFrame wMF = new WorkerMainFrame(getMngFactory(), user);
 								break;
 							case "users.Manager":

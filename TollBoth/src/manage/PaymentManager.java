@@ -16,8 +16,7 @@ import utils.DateCalculator;
 public class PaymentManager {
 
 	public static void insertData(Payment payment) {
-//		String databaseURL = AppSettings.getDatabaseURL();
-		String databaseURL = "jdbc:ucanaccess://database/TollBooth.accdb";
+		String databaseURL = AppSettings.getDatabaseURL();
 		try {
 			Connection connection = DriverManager.getConnection(databaseURL);
 			PreparedStatement statement = null;
@@ -55,8 +54,6 @@ public class PaymentManager {
 	}
 
 	public static void main(String[] args) {
-//		insert into table1 (approvaldate)
-//	       values (convert(datetime,'18-06-12 10:34:09 PM',5))
 		LocalDateTime date = Convert.toDate("21.12.2012 12:00:00");
 		String dateStr = Convert.toSqlString(date);
 		String s = String.format(

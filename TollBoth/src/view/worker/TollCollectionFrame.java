@@ -103,6 +103,8 @@ public class TollCollectionFrame extends JFrame {
 				double price = mngFactory.getPriceMng().calculatePrice(category, Currency.DIN, beginStation, endStation);
 				Payment payment = new Payment(price, endTime, category, endStation);
 				PaymentManager.insertData(payment);				
+				
+				// TODO: Poruka o uspjesnoj naplati
 			}
 
 			private boolean overSpeedLimit(LocalDateTime beginTime, LocalDateTime endTime) {
@@ -110,7 +112,6 @@ public class TollCollectionFrame extends JFrame {
 				double hours = DateCalculator.getHours(beginTime, endTime);
 				double averageSpeed = kilometers*1.0 / hours;
 				double speedLimit = TollSystemManager.getSpeedLimit();
-				System.out.println(averageSpeed + " " + speedLimit);
 				return averageSpeed > speedLimit;
 			}
 
