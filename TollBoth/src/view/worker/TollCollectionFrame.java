@@ -150,7 +150,6 @@ public class TollCollectionFrame extends JFrame {
 	}
 	
 	private void successfulCollectionMessage(TollCollectionFrame parent) {
-		// TODO: dodaj poruku za uspesnu naplatu
 		JOptionPane.showMessageDialog(parent,"Successful toll collection.");
 	}
 

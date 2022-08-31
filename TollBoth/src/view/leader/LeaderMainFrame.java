@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import manage.ManagerFactory;
 import users.Leader;
 import users.User;
+import utils.LoggingOut;
 import view.LoginFrame;
 
 
@@ -136,11 +137,7 @@ public class LeaderMainFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				dispose();
-				//ManagerFactory managerFactory = new ManagerFactory(mngFactory.getAppSettings());
-				mngFactory.loadData();
-				LoginFrame loginFrame = new LoginFrame(mngFactory);
+				LoggingOut.logOut(LeaderMainFrame.this);
 				
 			}
 			

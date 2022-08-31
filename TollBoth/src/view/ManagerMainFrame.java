@@ -15,6 +15,7 @@ import crud.WorkerCRUDMenu;
 import manage.ManagerFactory;
 import net.miginfocom.swing.MigLayout;
 import users.User;
+import utils.LoggingOut;
 
 public class ManagerMainFrame extends JFrame{
 	ManagerFactory mngFactory;
@@ -52,11 +53,13 @@ public class ManagerMainFrame extends JFrame{
 		JButton tollStationBtn = new JButton("Change Toll Station Data");
 		JButton tollBoothBtn = new JButton("Change Toll Booth Data");
 		JButton reportBtn = new JButton("Check Reports");
+		JButton logOutBtn = new JButton("Log out");
 		
 		workerBtn.setPreferredSize(tollStationBtn.getPreferredSize());
 		leaderBtn.setPreferredSize(tollStationBtn.getPreferredSize());
 		tollBoothBtn.setPreferredSize(tollStationBtn.getPreferredSize());
 		reportBtn.setPreferredSize(tollStationBtn.getPreferredSize());
+		logOutBtn.setPreferredSize(tollStationBtn.getPreferredSize());
 		
 		panel.add(new JLabel ("Welcome, "+user.getFirstName()), "wrap");
 		panel.add(workerBtn);
@@ -64,6 +67,7 @@ public class ManagerMainFrame extends JFrame{
 		panel.add(tollStationBtn);
 		panel.add(tollBoothBtn, "wrap");
 		panel.add(reportBtn);
+		panel.add(logOutBtn);
 		
 		workerBtn.addActionListener(new ActionListener() {
 			@Override
@@ -96,6 +100,12 @@ public class ManagerMainFrame extends JFrame{
 		reportBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
+		logOutBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoggingOut.logOut(ManagerMainFrame.this);
 			}
 		});
 	}
