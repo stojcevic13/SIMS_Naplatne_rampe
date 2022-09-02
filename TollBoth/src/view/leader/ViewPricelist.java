@@ -34,7 +34,6 @@ public class ViewPricelist extends JPanel{
 	private Leader leader;
 	private JFrame contentPane;
 	
-	protected JTextField txtSearch = new JTextField(20);
 	protected JLabel lblPrices;
 	protected JTable table;
 	protected TableRowSorter<AbstractTableModel> tableSorter = new TableRowSorter<AbstractTableModel>();
@@ -83,41 +82,8 @@ public class ViewPricelist extends JPanel{
 		  		  
 		  
 		this.contentPane.add(this);
-		  
-		
-		  txtSearch.getDocument().addDocumentListener(new DocumentListener() {
-
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				if (txtSearch.getText().trim().length() == 0) {
-				     tableSorter.setRowFilter(null);
-				  } else {
-					  tableSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim()));
-				  }
-				
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				if (txtSearch.getText().trim().length() == 0) {
-				     tableSorter.setRowFilter(null);
-				  } else {
-					  tableSorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim()));
-				  };
-				
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				
-			}
-			  
-		  });
+		 
 
 	}
-
-
-	
-	
 
 }

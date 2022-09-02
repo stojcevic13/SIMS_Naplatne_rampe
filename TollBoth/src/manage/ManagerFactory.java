@@ -17,6 +17,7 @@ public class ManagerFactory {
 	private TollBoothManager boothMng;
 	private TollStationManager stationMng;
 	private PriceManager priceMng;
+	private VehicleManager vehicleMng;
 	
 	
 	
@@ -30,7 +31,20 @@ public class ManagerFactory {
 		this.stationMng = new TollStationManager();
 		this.boothMng = new TollBoothManager();
 		this.priceMng = new PriceManager();
+		this.vehicleMng = new VehicleManager();
 	}
+	
+	
+	public VehicleManager getVehicleMng() {
+		return vehicleMng;
+	}
+
+
+	public void setVehicleMng(VehicleManager vehicleMng) {
+		this.vehicleMng = vehicleMng;
+	}
+
+
 	public AppSettings getAppSettings() {
 		return appSettings;
 	}
@@ -91,6 +105,10 @@ public class ManagerFactory {
 			sql = "SELECT * FROM Pricelist";
 			result = statement.executeQuery(sql);
 			this.priceMng.loadData(result);
+			
+			sql = "SELECT * FROM Vehicle";
+			result = statement.executeQuery(sql);
+			this.vehicleMng.loadData(result);
 			
 			connection.close();
 			
