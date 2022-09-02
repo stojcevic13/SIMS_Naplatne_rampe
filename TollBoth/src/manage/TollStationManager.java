@@ -26,6 +26,15 @@ public class TollStationManager {
 		return null;
 	}
 	
+	public static TollStation findTollStation(String name) {
+		for(TollStation ts : tollStations) {
+			if(ts.getLocation().toUpperCase().equals(name.toUpperCase())) {
+				return ts;
+			}
+		}
+		return null;
+	}
+	
 	public void loadData(ResultSet result) {
 		tollStations.clear();
 		try {
