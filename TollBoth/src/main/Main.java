@@ -13,12 +13,21 @@ import view.LoginFrame;
 
 public class Main {
 	
+	private static LoginFrame loginFrame;
+
 	public static void main(String[] args) {
 		AppSettings appSettings = new AppSettings("jdbc:ucanaccess://database/TollBooth.accdb");
 		ManagerFactory managerFactory = new ManagerFactory(appSettings);
 		managerFactory.loadData();
-		//VehicleGenerator.addToDatabase(10);
-		LoginFrame loginFrame = new LoginFrame(managerFactory);
+		setLoginFrame(new LoginFrame(managerFactory));
+	}
+
+	public static LoginFrame getLoginFrame() {
+		return loginFrame;
+	}
+
+	public static void setLoginFrame(LoginFrame loginFrame) {
+		Main.loginFrame = loginFrame;
 	}
 }
 

@@ -1,5 +1,7 @@
 import java.util.Objects;
 
+import users.Worker;
+
 public class TollBooth {
 
 	private int number;

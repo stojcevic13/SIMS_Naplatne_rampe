@@ -13,6 +13,11 @@ import users.TollBooth;
 import users.User;
 import users.Worker;
 import utils.AppSettings;
+import utils.LoggingOut;
+
+import java.awt.FlowLayout;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 public class WorkerMainFrame extends JFrame {
 	
@@ -26,16 +31,19 @@ public class WorkerMainFrame extends JFrame {
 		worker.setTollBooth(28);
 		this.tollBooth = mngFactory.getBoothMng().loadByID(worker.getTollBooth());
 		
-		getContentPane().setLayout(null);
+		setTitle("Worker Main Frame");
+		setSize(550, 350);
+		setLocation(300, 300);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		JLabel lblWelcome = new JLabel("Welcome");
-		lblWelcome.setBounds(231, 20, 59, 13);
-		getContentPane().add(lblWelcome);
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnCollection = new JButton("Collection");
 		btnCollection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				// TODO add action for collection
 				if (tollBooth == null) {
 					JOptionPane.showMessageDialog(btnCollection, "You currently do not have a function!");
 					return;
@@ -48,13 +56,21 @@ public class WorkerMainFrame extends JFrame {
 				TollCollectionFrame tollCollectionFrame = new TollCollectionFrame(mngFactory, tollBooth);
 			}
 		});
-		btnCollection.setBounds(212, 237, 97, 21);
-		getContentPane().add(btnCollection);
+		panel.add(btnCollection);
 		
-		setTitle("Worker Main Frame");
-		setSize(550, 350);
-		setLocation(300, 300);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoggingOut.logOut(WorkerMainFrame.this);
+			}
+		});
+		panel.add(btnLogOut);
+		
+		JPanel panel_1 = new JPanel();
+		getContentPane().add(panel_1, BorderLayout.NORTH);
+		
+		JLabel lblWelcome = new JLabel("Welcome");
+		panel_1.add(lblWelcome);
 		setVisible(true);
 	}
 

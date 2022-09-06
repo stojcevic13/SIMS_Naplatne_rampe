@@ -32,6 +32,9 @@ public class LoginFrame extends JFrame {
 	private UserManager userMng;
 	
 	private JButton btnLogin;
+	private JPasswordField password;
+
+	private JTextField userName;
 
 
 	public LoginFrame(ManagerFactory mngFactory) {
@@ -54,8 +57,8 @@ public class LoginFrame extends JFrame {
 	private void loginGUI() {
 		 JPanel panel = new JPanel();
 
-		 JTextField userName = new JTextField(20);  
-		 JPasswordField password = new JPasswordField(20);
+		 userName = new JTextField(20);  
+		 password = new JPasswordField(20);
 		 
 		 btnLogin = new JButton("Login");
 		 JButton btnReset = new JButton("Reset");
@@ -96,7 +99,6 @@ public class LoginFrame extends JFrame {
 								user.getPassword().equals(passwordString)) {
 							found = true;
 							setVisible(false);
-							dispose();
 							switch(user.getClass().getName()) {
 							case "users.Worker":
 //								CreateWorker cw = new CreateWorker(mngFactory);
@@ -146,14 +148,27 @@ public class LoginFrame extends JFrame {
 				error.setVisible(false);
 			}
 			
-		});
+		});		
 		
-	
-		
-
 	}
 
 	public ManagerFactory getMngFactory() {
 		return mngFactory;
+	}
+	
+	public JPasswordField getPassword() {
+		return password;
+	}
+
+	public void setPassword(JPasswordField password) {
+		this.password = password;
+	}
+
+	public JTextField getUserName() {
+		return userName;
+	}
+
+	public void setUserName(JTextField userName) {
+		this.userName = userName;
 	}
 }

@@ -105,6 +105,8 @@ public class TollCollectionFrame extends JFrame {
 				PaymentManager.insertData(payment);				
 				
 				// TODO: Poruka o uspjesnoj naplati
+				successfulCollectionMessage(TollCollectionFrame.this);
+				
 			}
 
 			private boolean overSpeedLimit(LocalDateTime beginTime, LocalDateTime endTime) {
@@ -145,6 +147,10 @@ public class TollCollectionFrame extends JFrame {
 		for (Category category : Category.values()) {
 			this.categoryCB.addItem(category);
 		}
+	}
+	
+	private void successfulCollectionMessage(TollCollectionFrame parent) {
+		JOptionPane.showMessageDialog(parent,"Successful toll collection.");
 	}
 
 	public static void main(String[] args) {
