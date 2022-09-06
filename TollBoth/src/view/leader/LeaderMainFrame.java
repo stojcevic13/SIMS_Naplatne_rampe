@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -14,8 +16,12 @@ import javax.swing.JPanel;
 
 import manage.ManagerFactory;
 import users.Leader;
+
 import users.User;
 import utils.LoggingOut;
+
+import vehicles.Stats;
+
 import view.LoginFrame;
 
 
@@ -24,6 +30,8 @@ public class LeaderMainFrame extends JFrame{
 	static final long serialVersionUID = -7209558051742382765L;
 	private ManagerFactory mngFactory;
 	private Leader leader;
+	private ArrayList <JPanel> components;
+	private LeaderMainFrame contentPane;
 	
 
 	public LeaderMainFrame(ManagerFactory mngFactory, Leader leader) {
@@ -84,15 +92,18 @@ public class LeaderMainFrame extends JFrame{
 		
 		getContentPane().setLayout(new FlowLayout());
 		
+		this.contentPane = this;
+		
 		/////////////////////////////////////////////////////////////////////////
 		
 
-		ArrayList <JPanel> components = new ArrayList<JPanel>();
+		components = new ArrayList<JPanel>();
 		
 		LeaderProfile lp = new LeaderProfile(this.mngFactory, this.leader, this);
 		components.add(lp);
 		ViewPricelist vp = new ViewPricelist(this.mngFactory, this.leader, this);
 		components.add(vp);
+		
 		
 		lp.setVisible(false);
 		vp.setVisible(true);
@@ -144,12 +155,43 @@ public class LeaderMainFrame extends JFrame{
 		});
 		
 		
-		
+		customReportItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ReportDialog rFrame = new ReportDialog(mngFactory, contentPane);
+				
+			}
+			
+		});
 		
 		
 	}
 
-
+	public void generateAllReportFrame(LocalDate dateFrom, LocalDate dateTo, Stats stats) {
+			AllReportFrame arf = new AllReportFrame(this.mngFactory, this.leader, this.contentPane, stats, dateFrom, dateTo);
+			this.components.add(arf);
+			for(JPanel panel : components) {
+				if(panel.equals(arf)) {
+					panel.setVisible(true);
+				}else{
+					panel.setVisible(false);
+				}
+			}
+	}
+	
+	public void generateSingleReportFrame(LocalDate dateFrom, LocalDate dateTo, Stats stats) {
+		SingleReportFrame srf = new SingleReportFrame(this.mngFactory, this.leader, this.contentPane, stats, dateFrom, dateTo);
+		this.components.add(srf);
+		for(JPanel panel : components) {
+			if(panel.equals(srf)) {
+				panel.setVisible(true);
+			}else{
+				panel.setVisible(false);
+			}
+		}
+}
+	
 	
 	
 	

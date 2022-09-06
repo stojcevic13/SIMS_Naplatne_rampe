@@ -185,17 +185,6 @@ public class LeaderProfile extends JPanel{
 		this.add(lblPasswordUser, conPasswordUser);
 		
 		contentPane.add(this);
-		/*
-		changeBtn.addActionListener(new ActionListener() {
-	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				PredavacChangeProfila ChangeDijalog = new PredavacChangeProfila(mngFactory, User,
-						lblFirstNameUser, lblPrezFirstNameUser, lblGenderUser, lblAddressUser,
-						 lblPasswordUser, lblPhoneUser, lblDatumRodjenjaUser);
-	
-				}});
 		
-	*/	
 	}
 }

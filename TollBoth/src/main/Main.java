@@ -3,12 +3,12 @@
  */
 package main;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import manage.ManagerFactory;
 import utils.AppSettings;
+import vehicles.VehicleGenerator;
 import view.LoginFrame;
 
 public class Main {
